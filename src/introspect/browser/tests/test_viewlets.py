@@ -1,7 +1,8 @@
+import ith.browser.testing
+import ith.testing
+import ith.util
 import md.testing
 import md.testing.browser
-import ith.testing
-import ith.browser.testing
 
 INTERFACE = 'InterfaceClass zope.interface.Interface'
 
@@ -10,6 +11,9 @@ class DebuggerViewletTest(md.testing.browser.TestCase):
     layer = ith.browser.testing.layer
 
     def setUp(self):
+        if not ith.util.in_dev_mode():
+            self.skipTest('Works only in dev mode')
+
         self.app = ith.testing.add_application()
         self.therapist = ith.testing.add_therapist(
             'charlotte@example.com', 'secret')
