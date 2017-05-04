@@ -12,10 +12,10 @@
       margin-bottom: 1em;
     }
     .debuginfo .debuginfo {
-    background-color: #ccc;
-    font-size: smaller;
-    margin: 0.5em;
-    padding: 0.5em;
+      background-color: #ccc;
+      font-size: smaller;
+      margin-bottom: 0.5em;
+      padding: 0.5em 1em;
     }
     .debuginfo dd { margin-left: 1em; }
     .debuginfo dd dl { font-size: smaller; }
@@ -75,8 +75,7 @@
           <tal:block define="viewlets viewlet.viewlets[key]">
             <div tal:repeat="viewletkey viewlets" class="debuginfo">
               <h5><span tal:content="key"/> &gt; <strong tal:content="viewletkey" /></h5>
-              <dl tal:define="viewletinfo viewlets[viewletkey]"
-                  class="debuginfo">
+              <dl tal:define="viewletinfo viewlets[viewletkey]">
                 <tal:block repeat="innerkey viewletinfo">
                   <dt tal:content="innerkey" />
                   <dd tal:content="viewletinfo[innerkey]" />
