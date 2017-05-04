@@ -3,10 +3,9 @@
   xmlns:grok="http://namespaces.zope.org/grok"
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:i18n="http://namespaces.zope.org/i18n"
-  i18n_domain="diary">
+  i18n_domain="introspect">
 
   <include package="ith" />
   <grok:grok package="." />
 
-  <i18n:registerTranslations directory="i18n/locales" />
 </configure>

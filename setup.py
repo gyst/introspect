@@ -24,7 +24,10 @@ setup(
         'zope.security',
         'zope.traversing',
         ],
-    entry_points={},
+    entry_points={
+        'z3c.autoinclude.plugin': [
+            'target = ith'
+        ]},
     extras_require={
         'test': [
             'zope.testing',

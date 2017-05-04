@@ -1,0 +1,126 @@
+<tal:block
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   xmlns:tal="http://xml.zope.org/namespaces/tal"
+   i18n:domain="ith"
+   >
+  <style type="text/css">
+    .debugger { background-color: #eee; padding: 1em;}
+    .debuginfo {
+      background-color: #ddd;
+      font-family: monospace;
+      padding: 1em;
+      margin-bottom: 1em;
+    }
+    .debuginfo .debuginfo {
+    background-color: #ccc;
+    font-size: smaller;
+    margin: 0.5em;
+    padding: 0.5em;
+    }
+    .debuginfo dd { margin-left: 1em; }
+    .debuginfo dd dl { font-size: smaller; }
+  </style>
+  <div class="container clearfix debugger">
+
+    <p>
+      <a href="?debug=1" tal:condition="not:viewlet.inspect">debug</a>
+      <tal:more condition="viewlet.inspect">
+        <a href="?debug=0">debug off</a>
+        |
+        <a href="?debug=1&amp;pdb=1">start pdb</a>
+      </tal:more>
+    </p>
+
+    <div tal:content="viewlet.maybe_start_pdb()" />
+
+    <div tal:condition="viewlet.inspect">
+
+      <h3>Context</h3>
+      <dl class="debuginfo"
+          tal:define="info viewlet.context_info">
+        <tal:block repeat="key info">
+          <dt tal:content="key" />
+          <dd tal:content="info[key]" />
+        </tal:block>
+        <dt>provides</dt>
+        <dd tal:repeat="item viewlet.context_provides"
+            tal:content="item" />
+        <dt>base classes</dt>
+        <dd tal:repeat="item viewlet.context_bases"
+            tal:content="item" />
+      </dl>
+
+      <h3>View</h3>
+      <dl class="debuginfo"
+          tal:define="info viewlet.view_info">
+        <tal:block repeat="key info">
+          <dt tal:content="key" />
+          <dd tal:content="info[key]" />
+        </tal:block>
+        <dt>base classes</dt>
+        <dd tal:repeat="item viewlet.view_bases"
+            tal:content="item" />
+      </dl>
+
+      <h3>Viewlet managers and viewlets</h3>
+      <tal:block define="info viewlet.viewlet_managers">
+        <div tal:repeat="key info" class="debuginfo">
+          <h4 tal:content="key" />
+          <dl tal:define="managerinfo info[key]">
+            <tal:block repeat="innerkey managerinfo">
+              <dt tal:content="innerkey" />
+              <dd tal:content="managerinfo[innerkey]" />
+            </tal:block>
+          </dl>
+          <tal:block define="viewlets viewlet.viewlets[key]">
+            <div tal:repeat="viewletkey viewlets" class="debuginfo">
+              <h5><span tal:content="key"/> &gt; <strong tal:content="viewletkey" /></h5>
+              <dl tal:define="viewletinfo viewlets[viewletkey]"
+                  class="debuginfo">
+                <tal:block repeat="innerkey viewletinfo">
+                  <dt tal:content="innerkey" />
+                  <dd tal:content="viewletinfo[innerkey]" />
+                </tal:block>
+              </dl>
+            </div>
+          </tal:block>
+        </div>
+      </tal:block>
+
+      <h3>Other Content Providers</h3>
+      <dl class="debuginfo"
+          tal:define="info viewlet.content_providers">
+        <tal:block repeat="key info">
+          <dt tal:content="key" />
+          <dd tal:define="innerinfo info[key]">
+            <dl>
+              <tal:block repeat="innerkey innerinfo">
+                <dt tal:content="innerkey" />
+                <dd tal:content="innerinfo[innerkey]" />
+              </tal:block>
+            </dl>
+          </dd>
+        </tal:block>
+      </dl>
+
+      <h3>Request</h3>
+      <dl class="debuginfo"
+          tal:define="info viewlet.request_info">
+        <tal:block repeat="key info">
+          <dt tal:content="key" />
+          <dd tal:content="info[key]" />
+        </tal:block>
+      </dl>
+
+      <dl class="debuginfo"
+          tal:define="info viewlet.request_items">
+        <tal:block repeat="key info">
+          <dt tal:content="key" />
+          <dd tal:content="info[key]" />
+        </tal:block>
+      </dl>
+
+    </div>
+    
+  </div>
+</tal:block>
